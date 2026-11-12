@@ -1,0 +1,19 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>Autorização TikTok</title><link rel="stylesheet" href="../estilo.css"></head><body>
+<h1>Autorização do TikTok</h1>
+<p id="msg">Processando…</p>
+<script>
+(function(){
+  var q = new URLSearchParams(location.search), m = document.getElementById('msg');
+  var state = q.get('state') || '';
+  if (q.get('error')) { m.textContent = 'O TikTok recusou a autorização: ' + (q.get('error_description') || q.get('error')); return; }
+  if (!q.get('code')) { m.textContent = 'Esta página só é usada no fim da autorização do app Publicador Parecia Verdade.'; return; }
+  var porta = (state.match(/^pv-(\d{4,5})-/) || [])[1];
+  if (porta) {
+    m.textContent = 'Autorizado! Voltando para o programa no computador…';
+    location.replace('http://127.0.0.1:' + porta + '/callback' + location.search);
+  } else {
+    m.textContent = 'Autorizado, mas esta página foi aberta fora do computador onde o programa está rodando. Rode a autorização de novo pelo navegador do computador.';
+  }
+})();
+</script></body></html>
